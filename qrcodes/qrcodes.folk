@@ -1,2 +1,3 @@
 # Placeholder to create a qrcode for file uploads
+# Does not work yet!
 # wish display_qrcode.tcl "Hello, World!" -window . -ppm 4
