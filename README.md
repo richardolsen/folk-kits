@@ -1,1 +1,1 @@
-A place to share my folk kits as they are created.
+A place to share my folk kits as they are being created.
