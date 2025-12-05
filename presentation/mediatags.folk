@@ -1,0 +1,12 @@
+#
+#   Taken from apriltags.folk
+#
+#   When the collected results for \
+#    [list /someone/ detects tags /tags/ on camera /camera/ \
+#         at timestamp /timestamp/ in time /aprilTime/] are /results/ {
+#
+#       foreach result $results {
+#
+#       }
+#   }
+
