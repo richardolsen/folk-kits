@@ -1,0 +1,22 @@
+# Placeholder to create a qrcode for file uploads
+# Does not work yet!
+# wish display_qrcode.tcl "Hello, World!" -window . -ppm 4
+#
+# wish $this displays mediaUploadQRcode 
+
+when /someone/ wishes /card/ is a mediaCard {
+    claim $card is a mediaCard
+    claim $card media is blank
+}
+
+when /mediaCard/ is blank {
+    # How do we get the id of the tag?
+    # We need it to generate the qrcode and link it to the mediaCard
+    
+    wish $mediaCard displays mediaUploadQRcode 
+
+}
+
+when /someone/ wishes /card/ displays mediaUploadQRcode {
+
+}

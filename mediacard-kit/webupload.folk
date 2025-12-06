@@ -1,0 +1,12 @@
+Wish the web server handles route {/mediacard/(.*)$} with handler {
+
+    html [string map [list file_data [htmlEscape $file_data] program_id $program_id file_name $filename] {
+        <html>
+            <body>
+                <div>
+                    Placeholder
+                </div>
+            </body>
+        </html>
+    }]
+}
