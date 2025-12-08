@@ -11,7 +11,7 @@
 
 when /someone/ is a kit called /kitType/ {
     # eg Claim $this is a kit called /kitType/
-    # eg claim $this is a kit called presentationKit
+    # eg claim $this is a kit called presentation
     # Do we need to check that the kit name is unqiue and not already in use???
     # TODO: What do we do?  Do we need to do anything? Refresh the kit???
 
@@ -19,7 +19,7 @@ when /someone/ is a kit called /kitType/ {
 }
 
 when /someone/ file /file/ is page /pageNumber/ of /kitType/ kit {
-    #   claim file page1.folk is page 1 of alphaKit kit
+    #   claim file page1.folk is page 1 of alpha kit
     #   TODO: What do we do?  Do we need to do anything? Refresh the kit???
     #   TODO: Do we need to track the highest page number???
 
@@ -28,21 +28,15 @@ when /someone/ file /file/ is page /pageNumber/ of /kitType/ kit {
 }
 
 when /someone/ is a tag /tagNumber/ is page /pageNumber/ of /kitType/ kit {
-    #   claim tag 145 is page 1 of alphaKit kit
+    #   claim tag 145 is page 1 of alpha kit
+    #   Being a page of a kit means that it "runs" when the kit is displayed
     #   TODO: What do we do?  Do we need to do anything? Refresh the kit???
     #   TODO: Does this page need to be already identified as a page with a collection of media/objects???
-    #   the claim should still stand so make sure the kit is refreshed??
+    #   TODO: the claim should append the code to the kit page. I think
 
-    wish $this refreshes /kitType/ kit
 
 }
 
 
-when /someone/ wishes $kit refreshed $kitType kit {
-    #   Load all the kit pages
 
-}
-
-
-claim $this is the alphaKit kit
-
+claim $this is the kit called alpha  
