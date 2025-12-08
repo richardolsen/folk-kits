@@ -4,12 +4,14 @@
 #
 # wish $this displays mediaUploadQRcode 
 
+wish $this is page 1 of mediaCard kit
+
 when /someone/ wishes /card/ is a mediaCard {
     claim $card is a mediaCard
     claim $card media is blank
 }
 
-when /mediaCard/ is blank {
+when /mediaCard/ is blank & /mediaCard/ is a mediaCard {
     # How do we get the id of the tag?
     # We need it to generate the qrcode and link it to the mediaCard
     
@@ -17,6 +19,11 @@ when /mediaCard/ is blank {
 
 }
 
-when /someone/ wishes /card/ displays mediaUploadQRcode {
+when /someone/ wishes /mediaCard/ displays mediaUploadQRcode {
+
+}
+
+when /someone/ wishes /tag/ is a mediaCard with mediaUrl /mediaUrl/ {
+
 
 }

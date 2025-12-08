@@ -1,0 +1,48 @@
+#
+#   A kit to make kits, including virtual bookshelve kits
+#   - create a new kit
+#   - create a new page for a kit 
+#   - create a new collection for a kit
+#   - identify when a page is attempting to use a kit which is not available
+#   - create a kit from a folder of files 
+#
+
+
+
+when /someone/ is a kit called /kitType/ {
+    # eg Claim $this is a kit called /kitType/
+    # eg claim $this is a kit called presentationKit
+    # Do we need to check that the kit name is unqiue and not already in use???
+    # TODO: What do we do?  Do we need to do anything? Refresh the kit???
+
+    wish $this refreshes /kitType/ kit
+}
+
+when /someone/ file /file/ is page /pageNumber/ of /kitType/ kit {
+    #   claim file page1.folk is page 1 of alphaKit kit
+    #   TODO: What do we do?  Do we need to do anything? Refresh the kit???
+    #   TODO: Do we need to track the highest page number???
+
+    wish $this refreshes /kitType/ kit 
+
+}
+
+when /someone/ is a tag /tagNumber/ is page /pageNumber/ of /kitType/ kit {
+    #   claim tag 145 is page 1 of alphaKit kit
+    #   TODO: What do we do?  Do we need to do anything? Refresh the kit???
+    #   TODO: Does this page need to be already identified as a page with a collection of media/objects???
+    #   the claim should still stand so make sure the kit is refreshed??
+
+    wish $this refreshes /kitType/ kit
+
+}
+
+
+when /someone/ wishes $kit refreshed $kitType kit {
+    #   Load all the kit pages
+
+}
+
+
+claim $this is the alphaKit kit
+
