@@ -4,6 +4,8 @@
 #
 # wish $this displays mediaUploadQRcode 
 
+source "vendor/display_qrcode.tcl"
+
 when /someone/ wishes /card/ is a mediaCard {
     claim $card is a mediaCard
     claim $card media is blank

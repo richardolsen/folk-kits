@@ -7,10 +7,10 @@
 #   - create a kit from a folder of files 
 #
 
-when /someone/ is a kit called /kitType/ {
+when /kit/ is a kit called /kitType/ {
     # eg Claim $this is a kit called /kitType/
 
-    claim the kit $kitType exists
+    claim the $kitType kit exists
 }
 
 when /kitName/ kit has virtual pages /pageList/ {
