@@ -1,8 +1,3 @@
-when the kit alphaKit does not exist {
-
-    wish $this is labelled "MediaCard kit requires alphaKit"
-}
-
 when the kit alphaKit exists & the mediaCard kit does not exist {
 
     wish $this is the mediaCard kit 
@@ -11,7 +6,8 @@ when the kit alphaKit exists & the mediaCard kit does not exist {
 when the kit alphaKit exists & the mediaCard kit exists {
 
     # When installing from the new-virtual-kits folder on your folk system
-    wish file mediacard.folk is page 1 of mediaCard kit
-    wish file webupload.folk is page 2 of mediaCard kit
-
+    
+    claim mediacard kit has pages [ \
+        {1 mediacard-kit.folk} \
+        {2 webupload.folk}]
 }

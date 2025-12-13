@@ -1,0 +1,56 @@
+#
+#   A kit to make kits, including virtual bookshelve kits
+#   - create a new kit
+#   - create a new page for a kit 
+#   - create a new collection for a kit
+#   - identify when a page is attempting to use a kit which is not available
+#   - create a kit from a folder of files 
+#
+
+when /someone/ is a kit called /kitType/ {
+    # eg Claim $this is a kit called /kitType/
+
+    claim the kit $kitType exists
+}
+
+when /kitName/ kit has virtual pages /pageList/ {
+    # define the list of pages in a kit
+    # ensure the pages are running as virtual programs
+
+    foreach page $pageList {
+        # TODO: create a program id, copy the code, update the page code, delete the virtual page.
+
+    }
+}
+
+when /kitName/ kit has physcial pages /pageList/ {
+    # define the list of pages in a kit
+    # ensure the pages are running as virtual programs
+
+    foreach page $pageList {
+        wish $page footer is "$kitName: Page $page"
+
+        # TODO: run the program as a virtual program (check the page isn't in the physical space)
+
+    }
+}
+
+when /tag/ is a tag /tagNumber/ is page /pageNumber/ of /kitType/ kit {
+    #   claim tag 145 is page 1 of alpha kit
+    #   Being a page of a kit means that it "runs" when the kit is displayed
+    #   TODO: What do we do?  Do we need to do anything? Refresh the kit???
+    #   TODO: Does this page need to be already identified as a page with a collection of media/objects???
+    #   TODO: the claim should append the code to the kit page. I think
+
+
+}
+
+claim $this is the kit called alpha 
+wish $this is titled "Alpha Kit"
+claim $this has virtual pages [ \
+        {1 alpha-kit.folk} \
+        {2 checkForErrors.folk} \
+    ]
+
+# need to work out the syntax for the following.
+# claim $this has physical pages [{1 progam-id-13} {2 progam-id-14}]

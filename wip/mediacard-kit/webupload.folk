@@ -1,4 +1,3 @@
-wish $this is page 2 of mediaCard kit
 
 Wish the web server handles route {/mediacard/(.*)$} with handler {
 

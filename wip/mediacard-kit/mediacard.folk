@@ -4,8 +4,6 @@
 #
 # wish $this displays mediaUploadQRcode 
 
-wish $this is page 1 of mediaCard kit
-
 when /someone/ wishes /card/ is a mediaCard {
     claim $card is a mediaCard
     claim $card media is blank
@@ -23,7 +21,12 @@ when /someone/ wishes /mediaCard/ displays mediaUploadQRcode {
 
 }
 
-when /someone/ wishes /tag/ is a mediaCard with mediaUrl /mediaUrl/ {
+when /someone/ wishes /mediaCard/ is a mediaCard with media url /mediaUrl/ {
+
+
+}
+
+when /someone/ wishes /mediaCard/ is a mediaCard with local path /path/ {
 
 
 }
