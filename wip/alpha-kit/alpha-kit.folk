@@ -5,25 +5,32 @@
 #   - create a new collection for a kit
 #   - identify when a page is attempting to use a kit which is not available
 #   - create a kit from a folder of files 
+#   - enable kits to be sourced and installed from a github repository
 #
 
-when /kit/ is a kit called /kitType/ {
-    # eg Claim $this is a kit called /kitType/
+When /kit/ is a kit called /kitType/ {
+    # usage: claim $this is a kit called presentation
 
     claim the $kitType kit exists
+    wish $kit is titled "$kitType Kit"
 }
 
-when /kitName/ kit has virtual pages /pageList/ {
+When /kitName/ kit has sub-directory pages /pageList/ {
+    # usage: claim presentation kit has virtual pages [{1 124} {2 125}]
     # define the list of pages in a kit
-    # ensure the pages are running as virtual programs
+    
 
+    
     foreach page $pageList {
         # TODO: create a program id, copy the code, update the page code, delete the virtual page.
 
     }
+
+    Claim $kitName kit does not have sub-directory pages
+    Claim $kitName kit has physical pages $pageList
 }
 
-when /kitName/ kit has physcial pages /pageList/ {
+When /kitName/ kit has physcial pages /pageList/ {
     # define the list of pages in a kit
     # ensure the pages are running as virtual programs
 
@@ -35,7 +42,18 @@ when /kitName/ kit has physcial pages /pageList/ {
     }
 }
 
-when /tag/ is a tag /tagNumber/ is page /pageNumber/ of /kitType/ kit {
+When /kitName/ kit has repo pages /pageList/ {
+    # down the pages of the kit from a github repo 
+
+    foreach page $pageList {
+        wish $page footer is "$kitName: Page $page"
+
+        # TODO: run the program as a virtual program (check the page isn't in the physical space)
+
+    }
+}
+
+When /tag/ is a tag /tagNumber/ is page /pageNumber/ of /kitType/ kit {
     #   claim tag 145 is page 1 of alpha kit
     #   Being a page of a kit means that it "runs" when the kit is displayed
     #   TODO: What do we do?  Do we need to do anything? Refresh the kit???
@@ -45,11 +63,12 @@ when /tag/ is a tag /tagNumber/ is page /pageNumber/ of /kitType/ kit {
 
 }
 
-claim $this is the kit called alpha 
-wish $this is titled "Alpha Kit"
-claim $this has virtual pages [ \
+Claim $this is the kit called alpha
+
+Claim $this kit has sub-directory pages [ \
         {1 alpha-kit.folk} \
         {2 checkForErrors.folk} \
+        {3 installKits.folk} \
     ]
 
 # need to work out the syntax for the following.

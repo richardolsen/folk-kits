@@ -1,6 +1,6 @@
 when the kit alphaKit exists & the mediaCard kit does not exist {
 
-    wish $this is the mediaCard kit 
+    Claim $this is the mediaCard kit 
 }
 
 when the kit alphaKit exists & the mediaCard kit exists {

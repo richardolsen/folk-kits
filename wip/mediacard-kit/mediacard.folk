@@ -19,16 +19,20 @@ when /mediaCard/ is blank & /mediaCard/ is a mediaCard {
 
 }
 
-when /someone/ wishes /mediaCard/ displays mediaUploadQRcode {
+when /mediaCard/ is not blank & /mediaCard/ is a mediaCard {
+    # How do we get the id of the tag?
+    # We need it to generate the qrcode and link it to the mediaCard
+    
+    wish $mediaCard displays their image 
 
 }
 
-when /someone/ wishes /mediaCard/ is a mediaCard with media url /mediaUrl/ {
+when /mediaCard/ is a mediaCard with media url /mediaUrl/ {
 
 
 }
 
-when /someone/ wishes /mediaCard/ is a mediaCard with local path /path/ {
+when /mediaCard/ is a mediaCard with local path /path/ {
 
 
 }

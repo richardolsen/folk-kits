@@ -5,7 +5,7 @@ Wish the web server handles route {/mediacard/(.*)$} with handler {
         <html>
             <body>
                 <div>
-                    Placeholder
+                    File Upload: 
                 </div>
             </body>
         </html>
