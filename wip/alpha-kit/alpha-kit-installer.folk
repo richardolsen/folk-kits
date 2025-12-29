@@ -1,4 +1,5 @@
-# FIXME: Postscript and pdf files don't work.
+
+# FIXME: Postscript and pdf files don't work yet.
 
 #Taken from print.folk
 fn programToPs {id text {format "letter"} {mixins {}}} {
@@ -103,17 +104,19 @@ Claim the programToPs is [fn programToPs]
 When /wisher/ wishes /kit/ kit called /kitName/ is installed with pages /pageList/ { 
 
     # if $wisher is in the user-programs folder then install
-    # $kitName = user-programs/folk-ssps/alpha-kit.folk
-    # $wisher = user-programs/folk-ssps/alpha-kit.folk
+    # eg $kitName = user-programs/folk-ssps/alpha-kit.folk
+    # eg $wisher = user-programs/folk-ssps/alpha-kit.folk
 
     set substring "user-programs"
     if {[string first $substring $wisher 0] == -1} {
-        # this kit isn't in the user-programs directory, already installed
+        # this kit isn't in the user-programs directory, something has gone wrong
 
     } else {
+
+        set i 0
         foreach page $pageList { 
             
-            lassign $page pageNumber folkFileName
+            lassign $page pageNumber folkFileName folkFilePath
 
             # Get the next free id -- Not sure if there is a wish for this!
 
@@ -122,17 +125,16 @@ When /wisher/ wishes /kit/ kit called /kitName/ is installed with pages /pageLis
                 incr id
             }
 
-            #FIXME: get the code from the file.
-            set fo [open "/home/folk/folk/user-programs/folk-ssps/$folkFileName" "r"]
+            #Copy the code to the new file.
+            set fo [open "/home/folk/folk/user-programs/folk-ssps/$folkFilePath" "r"]
             set code [read $fo]
             close $fo
 
             set fo [open "/home/folk/folk-data/program/$id.folk" "w"]
-            #puts $fo $page
             puts $fo $code
             close $fo
 
-            #FIXME: Format hardcoded 
+            #FIXME: Doesn't work!
             #set ps [programToPs $id $code letter]
 
             #set fp [open "/home/folk/folk-data/program/$id.ps" w]
@@ -141,31 +143,44 @@ When /wisher/ wishes /kit/ kit called /kitName/ is installed with pages /pageLis
 
             #exec ps2pdf "/home/folk/folk-data/program/$id.ps" "/home/folk/folk-data/program/$id.pdf"
 
-            set userProgramCode "# The alpha kit program is $id.folk \n \
-            # This code will run it without the apriltag being visible to the camera \n \
-            # Delete this file if you don't want kits to run automatically \n \
-            \n \
-            set fp \[open /home/folk/folk-data/program\/$id.folk r\] \n \
-            Hold\! \-on boot.folk \-key \[list /home/folk/folk-data/program\/$id.folk code\] \n \
-            \-keep 100ms \n \
-            Claim $id has program code \[read \$fp\] \n \
-            close \$fp"
+            if {$i == 0} {
+                set kitId $id
 
-            set fp [open "/home/folk/folk/$wisher" w]
-            puts $fp $userProgramCode
-            close $fp
+                set userProgramCode "# The alpha kit program is $id.folk \n \
+                # This code will run it without the apriltag being visible to the camera \n \
+                # Delete this file if you don't want kits to run automatically \n \
+                \n \
+                set fp \[open /home/folk/folk-data/program\/$id.folk r\] \n \
+                Claim $id has program code \[read \$fp\] \n \
+                close \$fp"
+
+                set fp [open "/home/folk/folk/$wisher" w]
+                puts $fp $userProgramCode
+                close $fp
+
+            } 
+
+            # Append each page to the kit file.
+            # eg Wish program $id called $folkFileName is page $pageNumber of $kitName kit 
+            
+            set pageClaim "Wish program $id called \"$folkFileName\" is page $pageNumber of $kitName kit"
+
+            set fa [open "/home/folk/folk-data/program/$kitId.folk" "a"]
+            puts $fa $pageClaim
+            close $fa
+            
 
             # puts "Printing program $id on $::thisNode"
             # exec lpr {*}$args $saveDir/$id.pdf
             ;
+
+            incr i
         }
     }
 }
 
-set pageList {
-    {0 "alpha-kit/alpha-kit.folk"}
-    {1 "alpha-kit/install-kits.folk"}
+Wish $this kit called alpha is installed with pages {
+    {1 "alpha-kit" "alpha-kit/alpha-kit.folk"}
+    {2 "install-kits" "alpha-kit/install-kits.folk"}
+    {3 "error-checking" "alpha-kit/error-checking.folk"}
 }
-
-
-Wish $this kit called alpha is installed with pages $pageList
