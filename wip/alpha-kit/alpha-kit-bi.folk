@@ -66,10 +66,11 @@ When /tag/ is a tag /tagNumber/ is page /pageNumber/ of /kitType/ kit {
 Claim $this is the kit called alpha
 
 Claim $this kit has sub-directory pages [ \
-        {1 alpha-kit.folk} \
-        {2 checkForErrors.folk} \
-        {3 installKits.folk} \
+#        {1 alpha-kit.folk} \
+#        {2 checkForErrors.folk} \
+#        {3 installKits.folk} \
     ]
+
 
 # need to work out the syntax for the following.
 # claim $this has physical pages [{1 progam-id-13} {2 progam-id-14}]
