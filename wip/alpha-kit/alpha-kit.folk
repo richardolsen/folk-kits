@@ -11,16 +11,14 @@
 When /kit/ is a kit called /kitType/ {
     # usage: claim $this is a kit called presentation
 
-    claim the $kitType kit exists
-    wish $kit is titled "$kitType Kit"
+    Claim the $kitType kit exists
+    Wish $kit is titled "$kitType Kit"
 }
 
 When /kitName/ kit has sub-directory pages /pageList/ {
     # usage: claim presentation kit has virtual pages [{1 124} {2 125}]
     # define the list of pages in a kit
-    
 
-    
     foreach page $pageList {
         # TODO: create a program id, copy the code, update the page code, delete the virtual page.
 

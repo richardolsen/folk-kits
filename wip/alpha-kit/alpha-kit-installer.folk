@@ -100,7 +100,7 @@ fn programToPs {id text {format "letter"} {mixins {}}} {
 
 Claim the programToPs is [fn programToPs]
 
-When /wisher/ wishes /kitName/ kit is installed { 
+When /wisher/ wishes /kit/ kit called /kitName/ is installed with pages /pageList/ { 
 
     # if $wisher is in the user-programs folder then install
     # $kitName = user-programs/folk-ssps/alpha-kit.folk
@@ -111,47 +111,61 @@ When /wisher/ wishes /kitName/ kit is installed {
         # this kit isn't in the user-programs directory, already installed
 
     } else {
-        # Get the next free id -- Not sure if there is a wish for this!
+        foreach page $pageList { 
+            
+            lassign $page pageNumber folkFileName
 
-        set id 0
-        while {[file exists "/home/folk/folk-data/program/$id.folk"]} {
-            incr id
+            # Get the next free id -- Not sure if there is a wish for this!
+
+            set id 0
+            while {[file exists "/home/folk/folk-data/program/$id.folk"]} {
+                incr id
+            }
+
+            #FIXME: get the code from the file.
+            set fo [open "/home/folk/folk/user-programs/folk-ssps/$folkFileName" "r"]
+            set code [read $fo]
+            close $fo
+
+            set fo [open "/home/folk/folk-data/program/$id.folk" "w"]
+            #puts $fo $page
+            puts $fo $code
+            close $fo
+
+            #FIXME: Format hardcoded 
+            #set ps [programToPs $id $code letter]
+
+            #set fp [open "/home/folk/folk-data/program/$id.ps" w]
+            #puts $fp $ps
+            #close $fp
+
+            #exec ps2pdf "/home/folk/folk-data/program/$id.ps" "/home/folk/folk-data/program/$id.pdf"
+
+            set userProgramCode "# The alpha kit program is $id.folk \n \
+            # This code will run it without the apriltag being visible to the camera \n \
+            # Delete this file if you don't want kits to run automatically \n \
+            \n \
+            set fp \[open /home/folk/folk-data/program\/$id.folk r\] \n \
+            Hold\! \-on boot.folk \-key \[list /home/folk/folk-data/program\/$id.folk code\] \n \
+            \-keep 100ms \n \
+            Claim $id has program code \[read \$fp\] \n \
+            close \$fp"
+
+            set fp [open "/home/folk/folk/$wisher" w]
+            puts $fp $userProgramCode
+            close $fp
+
+            # puts "Printing program $id on $::thisNode"
+            # exec lpr {*}$args $saveDir/$id.pdf
+            ;
         }
-
-        #FIXME: get the code from the file.
-        set code "The code"
-
-        set fo [open "/home/folk/folk-data/program/$id.folk" "w"]
-        puts $fo $code
-        close $fo
-
-        #FIXME: Format hardcoded 
-        #set ps [programToPs $id $code letter]
-
-        #set fp [open "/home/folk/folk-data/program/$id.ps" w]
-        #puts $fp $ps
-        #close $fp
-
-        #exec ps2pdf "/home/folk/folk-data/program/$id.ps" "/home/folk/folk-data/program/$id.pdf"
-
-        set userProgramCode "# The alpha kit program is $id.folk \n \
-        # This code will run it without the apriltag being visible to the camera \n \
-        # Delete this file if you don't want kits to run automatically \n \
-        \n \
-        set fp \[open /home/folk/folk-data/program\/$id.folk r\] \n \
-        Hold\! \-on boot.folk \-key \[list /home/folk/folk-data/program\/$id.folk code\] \n \
-        \-keep 100ms \n \
-        Claim \$id has program code \[read \$fp\] \n \
-        close \$fp"
-
-        set fp [open "/home/folk/folk/$wisher" w]
-        puts $fp $userProgramCode
-        close $fp
-
-        # puts "Printing program $id on $::thisNode"
-        # exec lpr {*}$args $saveDir/$id.pdf
-
     }
 }
 
-Wish $this kit is installed
+set pageList {
+    {0 "alpha-kit/alpha-kit.folk"}
+    {1 "alpha-kit/install-kits.folk"}
+}
+
+
+Wish $this kit called alpha is installed with pages $pageList
