@@ -1,0 +1,67 @@
+  Wish the web server handles route {/print-kit/standard/(.*)$} with handler {
+    set programDir [dict get [QueryOne! the program save directory is /saveDir/] saveDir]
+    set program_id $1
+    set filenames [list \
+        "$programDir/$program_id.folk" \
+        "$::env(HOME)/folk-data/program/$program_id.folk" \
+    ]
+
+    foreach filename $filenames {
+        if [file exists $filename] {
+            set fp [open $filename r]
+            set file_data [read $fp]
+            close $fp
+            break
+        }
+    }
+
+    if {![info exists file_data]} {
+        set filename [lindex $filenames end]
+        set file_data "# (new file $filename)"
+    }
+
+    html [string map [list file_data [htmlEscape $file_data] program_id $program_id file_name $filename] {
+      <!DOCTYPE html>
+<script>
+  let id = program_id;
+  let title = program_id;
+</script>
+<script src="https://cdn.jsdelivr.net/npm/apriltag@latest/dist/browser.js"></script>
+<style>
+  @page {
+    size: A4;
+    margin: 50;
+  }
+  @media print {
+    html, body {
+      width: 210mm;
+      height: 297mm;
+    }
+   
+  }
+  body {
+        position: relative;
+    }
+    body #apriltag1 {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+</style>
+
+<body>
+  <div id="apriltag1">
+    <svg id="tag1" viewBox="0 0 100 100" width="200" height="200" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div id="tag1id"></div>
+    <div id="created1">Created: </div>
+  </div>
+  <div><h3 id="title1"></h3></div>
+  <div id="code1">file_data</div>
+
+  
+</body>
+    <script src="/lib/folk.js"></script>
+    <script src="/lib/print-kit.js"></script>
+      </html>
+    }]
+  }

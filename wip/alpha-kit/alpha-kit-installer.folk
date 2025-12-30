@@ -31,22 +31,11 @@ When /wisher/ wishes /kit/ kit called /kitName/ is installed with pages /pageLis
             set fo [open "/home/folk/folk-data/program/$id.folk" "w"] 
             puts $fo $code          
             close $fo
-
-            #Create the html file
-            set fo [open "/home/folk/folk/user-programs/folk-ssps/alpha-kit/standard.html" "r"]
-            set html [read $fo]
-            close $fo
-
-            string map {'let code = ""' 'let code = "$code"'} html
-            string map {"let id = 0" "let id = $id"} html
-            string map {"let title = \"\"" "let title = \"$folkFileName\""} html
   
-            set fo [open "/home/folk/folk-data/program/$id.html" "w"]
-            puts $fo $html
-            close $fo
-
-            exec html2ps /home/folk/folk-data/program/$id.html > /home/folk/folk-data/program/$id.ps
-            exec wkhtmltopdf /home/folk/folk-data/program/$id.html /home/folk/folk-data/program/$id.pdf 
+            
+            # exec phantomjs
+            # exec html2ps /home/folk/folk-data/program/$id.html > /home/folk/folk-data/program/$id.ps
+            # exec wkhtmltopdf /home/folk/folk-data/program/$id.html /home/folk/folk-data/program/$id.pdf 
 
             if {$i == 0} {
                 set kitId $id
@@ -85,4 +74,6 @@ Wish $this kit called alpha is installed with pages {
     {1 "alpha-kit" "alpha-kit/alpha-kit.folk"}
     {2 "install-kits" "alpha-kit/install-kits.folk"}
     {3 "error-checking" "alpha-kit/error-checking.folk"}
+    {4 "print-standard" "alpha-kit/print-standard.folk"}
+    {5 "print-title" "alpha-kit/print-title.folk"}
 }

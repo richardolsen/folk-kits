@@ -24,8 +24,10 @@
   }
 
   main()
-  let myDiv = document.getElementById('code1')
-  newCode = code.split('\n').map((line, index) => `${index + 1}. ${line}`).join('<br />');
+
+  let myDiv = document.getElementById('code1');
+  let code = myDiv.innerHTML;
+  newCode = code.split('\n').map((line, index) => `<pre>${index + 1}. ${line}</pre>`).join('');
   myDiv.innerHTML = newCode;
 
   let theTitle = document.getElementById('title1')
