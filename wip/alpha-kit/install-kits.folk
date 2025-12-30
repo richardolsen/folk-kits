@@ -1,3 +1,13 @@
-# claim $this has kit repos [ list \
-        "https://github.com/richardolsen/folk-kits/kits/available-kits.txt" \
-    ]
+set availableKits {
+    {"Presentation Kit" "presentation-kit" "presentation-kit.folk" file} 
+    {"Media Card Kit" "mediacard-kit" "mediacard-kit.folk" file}
+}
+
+
+when /someone/ wishes /kitName/ kit is installed {
+    # Copy all program files from 
+
+}
+
+Wish "Presentation Kit" is installed
+Wish "Media Card Kit" is installed

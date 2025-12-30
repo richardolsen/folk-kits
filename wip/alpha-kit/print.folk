@@ -1,0 +1,23 @@
+# requires html2ps and wkhtmltopdf - very hacky I know!
+when /someone/ wishes html version is created for program /id/ {
+    # usuage: wish html version is created for program 6
+
+
+}
+
+when /someone/ wishes a kit title is printed for /kitName/ kit {
+    #usage: wish a kit title is printed for alpha kit
+
+
+}
+
+when /someone/ wishes page /pageNumber/ of /kitName/ kit is printed {
+    #usage: wish page 2 of alpha kit is printed
+
+}
+
+
+when /someone/ wishes all pages of /kitName/ kit are printed {
+    #usage: wish all pages of alpha kit are printed
+    
+}

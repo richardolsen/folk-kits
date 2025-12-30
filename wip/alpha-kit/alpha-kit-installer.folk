@@ -1,106 +1,4 @@
 
-# FIXME: Postscript and pdf files don't work yet.
-
-#Taken from print.folk
-fn programToPs {id text {format "letter"} {mixins {}}} {
-    set defaults {
-        margin 36
-        fontsize 12
-        tagsize {150 150}
-        maxcharsOverride {}
-    }
-    set formats [subst {
-        letter {
-            pagesize {612 792}
-            maxlines 40
-            maxchars 72
-            maxcharsOverride {[rangeDict 0 8 49]}
-        }
-        a4 {
-            pagesize {595 842}
-            maxlines 43
-            maxchars 68
-            maxcharsOverride {[rangeDict 0 8 46]}
-        }
-        indexcard {
-            fontsize 24
-            tagsize {300 300}
-            pagesize {612 792}
-            maxlines 22
-            maxchars 34
-            maxcharsOverride {[rangeDict 0 9 0]}
-        }
-    }]
-    # indexcard (really receipt) assumes fake letter/A4 size:
-    # https://github.com/NaitLee/Cat-Printer/discussions/8#discussioncomment-2557843
-
-    set params [dict merge $defaults [dict get $formats $format]]
-    dict with params {
-        lassign $pagesize PageWidth PageHeight
-        lassign $tagsize tagwidth tagheight
-        set lineheight [expr $fontsize*1.5]
-
-        set image [$printLib tagPsForId $id]
-
-        set pages [paginate $text $maxlines $maxchars $maxcharsOverride]
-
-        set out ""
-        set pageidx 0
-        foreach lines $pages {
-            set lineidx 0
-            append out [subst {
-                %!PS
-                << /PageSize \[$PageWidth $PageHeight\] >> setpagedevice
-
-                /settextcolor {0 setgray} def
-
-                /Courier findfont
-                $fontsize scalefont
-                setfont
-                newpath
-                [join [lmap lineinfo $lines {
-                    lassign $lineinfo linenum line
-                    set line [string map {"\\" "\\\\" ")" "\\)" "(" "\\("} $line]
-                    incr lineidx
-                    subst {
-                        $margin [expr $PageHeight-$margin-$lineidx*$lineheight] moveto
-                        0.4 setgray ([format "%- 3s" $linenum]) show settextcolor ($line) show
-                    }
-                }] "\n"]
-
-                [expr {$pageidx ? {} : [subst {
-                  gsave
-                  [expr $PageWidth-$tagwidth-$margin] [expr $PageHeight-$tagheight-$margin] translate
-                  $tagwidth $tagheight scale
-                  $image
-                  grestore
-
-                  /Helvetica-Narrow findfont
-                  [- $fontsize 2] scalefont
-                  setfont
-                  newpath
-                  [expr $PageWidth-$tagwidth-$margin] [expr $PageHeight-$tagheight-16-$margin] moveto
-                  ($id ([clock format [clock seconds] -format "%a, %d %b %Y, %r"])) show
-
-                  [join [lmap mixin $mixins {
-                      # We run mixins only on page 1 for now.  They
-                      # get access to everything in scope. Kind of
-                      # hacky, but OK for now.
-
-                      subst $mixin
-                  }] "\n"]
-                }] }]
-                showpage
-            }]
-            incr pageidx
-        }
-    }
-
-    return $out
-}
-
-Claim the programToPs is [fn programToPs]
-
 When /wisher/ wishes /kit/ kit called /kitName/ is installed with pages /pageList/ { 
 
     # if $wisher is in the user-programs folder then install
@@ -130,18 +28,25 @@ When /wisher/ wishes /kit/ kit called /kitName/ is installed with pages /pageLis
             set code [read $fo]
             close $fo
 
-            set fo [open "/home/folk/folk-data/program/$id.folk" "w"]
-            puts $fo $code
+            set fo [open "/home/folk/folk-data/program/$id.folk" "w"] 
+            puts $fo $code          
             close $fo
 
-            #FIXME: Doesn't work!
-            #set ps [programToPs $id $code letter]
+            #Create the html file
+            set fo [open "/home/folk/folk/user-programs/folk-ssps/alpha-kit/standard.html" "r"]
+            set html [read $fo]
+            close $fo
 
-            #set fp [open "/home/folk/folk-data/program/$id.ps" w]
-            #puts $fp $ps
-            #close $fp
+            string map {'let code = ""' 'let code = "$code"'} html
+            string map {"let id = 0" "let id = $id"} html
+            string map {"let title = \"\"" "let title = \"$folkFileName\""} html
+  
+            set fo [open "/home/folk/folk-data/program/$id.html" "w"]
+            puts $fo $html
+            close $fo
 
-            #exec ps2pdf "/home/folk/folk-data/program/$id.ps" "/home/folk/folk-data/program/$id.pdf"
+            exec html2ps /home/folk/folk-data/program/$id.html > /home/folk/folk-data/program/$id.ps
+            exec wkhtmltopdf /home/folk/folk-data/program/$id.html /home/folk/folk-data/program/$id.pdf 
 
             if {$i == 0} {
                 set kitId $id
@@ -169,9 +74,6 @@ When /wisher/ wishes /kit/ kit called /kitName/ is installed with pages /pageLis
             puts $fa $pageClaim
             close $fa
             
-
-            # puts "Printing program $id on $::thisNode"
-            # exec lpr {*}$args $saveDir/$id.pdf
             ;
 
             incr i

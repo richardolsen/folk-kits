@@ -9,7 +9,7 @@
 #
 
 When /kit/ is a kit called /kitType/ {
-    # usage: claim $this is a kit called alpha
+    # usage: Claim $this is a kit called alpha
 
     Claim the $kitType kit exists
     Wish $kit is titled "$kitType Kit"
@@ -17,6 +17,7 @@ When /kit/ is a kit called /kitType/ {
 
 When /wisher/ wishes program /id/ called /programName/ is page /pageNumber/ of /kitName/ kit { 
     # ensure the pages are running as virtual programs
+    # usage: Wish program 4 called "install-kits" is page 2 of alpha kit
 
     set fp [open /home/folk/folk-data/program/$id.folk r]
     Claim $id has program code [read $fp]
@@ -27,6 +28,4 @@ When /wisher/ wishes program /id/ called /programName/ is page /pageNumber/ of /
 
 }
 
-
 Claim $this is the kit called alpha
-# Wish program 4 called install-kits.folk is page 2 of alpha kit

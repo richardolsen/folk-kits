@@ -1,0 +1,7 @@
+When /wisher/ wishes /it/ is a /color/ color card {
+    # usage: Wish $this is a blue color card
+
+}
+
+Claim $this is the color kit
+Wish program 1? called "color-kit" is page 1 of color kit

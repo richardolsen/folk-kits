@@ -1,0 +1,3 @@
+A kit to generate different types of pdfs to print.
+eg Blank programs, spine labels, cover labels, playing cards, ect...
+
