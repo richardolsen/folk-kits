@@ -1,0 +1,5 @@
+Wish $this kit called print is installed with pages {
+    {1 "print-kit" "print-kit/print-kit.folk"}
+    {2 "install-kits" "print-kit/print-standard.folk"}
+    {3 "error-checking" "print-kit/print-title.folk"}
+}
