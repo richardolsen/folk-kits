@@ -1,0 +1,75 @@
+#TODO: Check writing json doesn't kill the system!
+
+when /wisher/ wishes directory /directory/ exists {
+
+    set directories [split $directory "/"]
+    set length [llength $directories]
+    set path "/" 
+    append path [lindex $directories 0]
+
+    for {set i 1} {$i < $length} {incr i} {
+        if { [file exists $path] == 0} { 
+            file makedir $path
+        }
+
+        append path [lindex $directories $i]
+    }
+}
+
+when /wisher/ wishes /kitName/ kit has a data store {
+    # creates and maintains the folk-kit directory under folk-data
+    # usage:  Wish alpha kit has a data store
+
+    Wish directory "/home/folk/folk-data/folk-kits/$kitName" exists 
+
+    set fileName "/home/folk/folk-data/folk-kits/$kitName/store.json"
+    if { [file exists $fileName] == 0} { 
+        set fp [open /home/folk/folk-data/folk-kits/$kitName/store.json w]
+
+        set userData [dict create id $id]
+        set jsonData [json::dict2json $userData]
+        puts $fp $jsonData
+        close $fp
+    }
+}
+
+when /wisher/ wishes program /id/ has a data store {
+    # creates and maintains the folk-kit directory under folk-data
+    # usage:  Wish program $id has a data store
+
+    # Check if the base folk-kits directory exists, and if not make it.
+
+    Wish directory "/home/folk/folk-data/folk-kits/store" exists 
+
+    # Check if the base store directory exists, and if not make it.
+    set fileName "/home/folk/folk-data/folk-kits/store/$id.json"
+    if { [file exists $fileName] == 0} { 
+        set fp [open /home/folk/folk-data/folk-kits/store/$id.json w]
+
+        set userData [dict create id $id]
+        set jsonData [json::dict2json $userData]
+        puts $fp $jsonData
+        close $fp
+    }
+}
+
+when /wisher/ wishes program /id/ stores /key/ /val/ {
+    # usage: Wish program 3 stores name "Alpha Kit"
+    
+    Wish program $id has a data store
+
+    set fp [open /home/folk/folk-data/folk-kits/store/$id.json r]
+    set jsonString [read $fp]
+    close $fp
+
+    set jsonData [json::json2dict $jsonString]
+    dict update jsonData $key $val {
+    if {![info exists $key]} {
+       set $key $val
+    }
+  }
+
+  set fp [open /home/folk/folk-data/folk-kits/store/$id.json w]
+  puts $fp $jsonData
+  close $fp
+}

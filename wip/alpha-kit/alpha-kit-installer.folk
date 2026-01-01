@@ -1,4 +1,3 @@
-
 When /wisher/ wishes /kit/ kit called /kitName/ is installed with pages /pageList/ { 
 
     # if $wisher is in the user-programs folder then install
@@ -32,7 +31,7 @@ When /wisher/ wishes /kit/ kit called /kitName/ is installed with pages /pageLis
             puts $fo $code          
             close $fo
   
-            
+            # FIXME: This doesn't work, is it a viable solution??
             # exec phantomjs
             # exec html2ps /home/folk/folk-data/program/$id.html > /home/folk/folk-data/program/$id.ps
             # exec wkhtmltopdf /home/folk/folk-data/program/$id.html /home/folk/folk-data/program/$id.pdf 
@@ -51,20 +50,16 @@ When /wisher/ wishes /kit/ kit called /kitName/ is installed with pages /pageLis
                 set fp [open "/home/folk/folk/$wisher" w]
                 puts $fp $userProgramCode
                 close $fp
-
             } 
 
-            # Append each page to the kit file.
+            # Append each page to the kit file so that the program runs virtually.
             # eg Wish program $id called $folkFileName is page $pageNumber of $kitName kit 
-            
             set pageClaim "Wish program $id called \"$folkFileName\" is page $pageNumber of $kitName kit"
-
             set fa [open "/home/folk/folk-data/program/$kitId.folk" "a"]
             puts $fa $pageClaim
             close $fa
-            
-            ;
 
+            Wish progam $id has a data store 
             incr i
         }
     }
@@ -74,6 +69,5 @@ Wish $this kit called alpha is installed with pages {
     {1 "alpha-kit" "alpha-kit/alpha-kit.folk"}
     {2 "install-kits" "alpha-kit/install-kits.folk"}
     {3 "error-checking" "alpha-kit/error-checking.folk"}
-    {4 "print-standard" "alpha-kit/print-standard.folk"}
-    {5 "print-title" "alpha-kit/print-title.folk"}
+    {4 "data-store" "alpha-kit/data-store.folk"}
 }

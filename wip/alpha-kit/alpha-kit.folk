@@ -1,18 +1,11 @@
-#
-#   A kit to make kits, including virtual bookshelve kits
-#   - create a new kit
-#   - create a new page for a kit 
-#   - create a new collection for a kit
-#   - identify when a page is attempting to use a kit which is not available
-#   - create a kit from a folder of files 
-#   - enable kits to be sourced and installed from a github repository
-#
-
-When /kit/ is a kit called /kitType/ {
+When /kit/ is a kit called /kitName/ {
     # usage: Claim $this is a kit called alpha
 
-    Claim the $kitType kit exists
-    Wish $kit is titled "$kitType Kit"
+    Claim the $kitName kit exists
+    Wish $kit is titled "$kitName Kit"
+
+    Wish $kitName kit has a data store
+    Wish program $kit stores name /kitName/
 }
 
 When /wisher/ wishes program /id/ called /programName/ is page /pageNumber/ of /kitName/ kit { 
@@ -23,9 +16,8 @@ When /wisher/ wishes program /id/ called /programName/ is page /pageNumber/ of /
     Claim $id has program code [read $fp]
     close $fp
 
-    # Probably other stuff we want to do down the line.
-    # Set titles and footers, print?
-
+    Wish program $id stores name $programName 
+    Wish $kitName kit stores "page/$pageNumber" $id 
 }
 
 Claim $this is the kit called alpha

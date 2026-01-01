@@ -1,13 +1,14 @@
 set availableKits {
-    {"Presentation Kit" "presentation-kit" "presentation-kit.folk" file} 
-    {"Media Card Kit" "mediacard-kit" "mediacard-kit.folk" file}
+    {"Presentation Kit" "presentation-kit" "presentation-kit.folk"} 
+    {"Media Card Kit" "mediacard-kit" "mediacard-kit.folk"}
+    {"Print Kit" "print-kit" "print-kit.folk"}
 }
-
 
 when /someone/ wishes /kitName/ kit is installed {
     # Copy all program files from 
 
 }
 
-Wish "Presentation Kit" is installed
-Wish "Media Card Kit" is installed
+Wish print kit is installed
+#Wish presentation kit is installed
+#Wish "Media Card" kit is installed
