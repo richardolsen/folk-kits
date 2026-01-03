@@ -6,33 +6,33 @@
 
 source "vendor/display_qrcode.tcl"
 
-when /someone/ wishes /card/ is a mediaCard {
-    claim $card is a mediaCard
+when /someone/ wishes /card/ is a media {
+    claim $card is a media
     claim $card media is blank
 }
 
-when /mediaCard/ is blank & /mediaCard/ is a mediaCard {
+when /media/ is blank & /media/ is a media {
     # How do we get the id of the tag?
-    # We need it to generate the qrcode and link it to the mediaCard
+    # We need it to generate the qrcode and link it to the media
     
-    wish $mediaCard displays mediaUploadQRcode 
+    wish $media displays mediaUploadQRcode 
 
 }
 
-when /mediaCard/ is not blank & /mediaCard/ is a mediaCard {
+when /media/ is not blank & /media/ is a media {
     # How do we get the id of the tag?
-    # We need it to generate the qrcode and link it to the mediaCard
+    # We need it to generate the qrcode and link it to the media
     
-    wish $mediaCard displays their image 
+    wish $media displays their image 
 
 }
 
-when /mediaCard/ is a mediaCard with media url /mediaUrl/ {
+when /media/ is a media with media url /mediaUrl/ {
 
 
 }
 
-when /mediaCard/ is a mediaCard with local path /path/ {
+when /media/ is a media with local path /path/ {
 
 
 }

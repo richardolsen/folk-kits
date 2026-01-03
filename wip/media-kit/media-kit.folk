@@ -1,19 +1,19 @@
-when the kit alphaKit exists & the mediaCard kit does not exist {
+when the kit alphaKit exists & the media kit does not exist {
 
     set pageList {
-        {0 mediacard-kit.folk}
+        {0 media-kit.folk}
         {2 webupload.folk}
     }
 
-    Wish $this kit called mediaCard is installed with pages $pageList
+    Wish $this kit called media is installed with pages $pageList
 }
 
-when the alpha kit exists & the mediaCard kit exists {
+when the alpha kit exists & the media kit exists {
 
     # When installing from the new-virtual-kits folder on your folk system
     
     claim mediacard kit has pages {
-        {1 mediacard-kit.folk} 
+        {1 media-kit.folk} 
         {2 webupload.folk}
     }
 }
