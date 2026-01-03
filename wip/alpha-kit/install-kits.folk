@@ -5,10 +5,11 @@ set availableKits {
 }
 
 when /someone/ wishes /kitName/ kit is installed {
-    # Copy all program files from 
+    # Copy all program files from folk-data/kits/$kitName 
 
+    
 }
 
-Wish print kit is installed
-#Wish presentation kit is installed
+Wish print kit is installed virtually
+#Wish presentation kit is installed manually 
 #Wish "Media Card" kit is installed

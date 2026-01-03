@@ -1,0 +1,163 @@
+When /someone/ wishes /thing/ draws a /color/ box &\
+     /thing/ has resolved geometry /geom/ {
+
+    dict with geom {
+        set points [list [list 0.005 0.005] \
+                        [list 0.005 0.015] \
+                        [list 0.015 0.015] \
+                        [list 0.015 0.005] \
+                        [list 0.005 0.005]]
+    }
+
+Wish $thing is labelled $width
+
+Wish $thing is outlined red
+
+    Wish to draw a line onto $thing with \
+        points $points width 0.001 color $color
+
+
+}
+
+Wish $this draws a green box
+
+
+####
+
+Wish $this is outlined blue
+
+When /thing/ wishes /tag/ to animate /boxName/ box /currentVersion/ onto /thing/ with points /points/ width /w/ color /color/ & /someone/ claims /boxName/ is version /currentVersion/ {
+
+Wish $tag is labelled $currentVersion 
+
+Wish to draw a line onto $tag with points $points width 0.001 color $color
+
+
+}
+
+When /tag/ claims /boxName/ is version /version/ {
+
+#Wish $tag is labelled $version
+
+
+}
+
+When /thing/ wishes /tag/ to draw /color/ animated box called /boxName/ which has a width /w/ and height /h/ and starts at /startX/ and /startY/ and finishes at /finishX/ and /finishY/ & /thing/ has resolved geometry /geom/ {
+
+
+Wish $tag is outlined yellow
+
+set version 1
+Claim $boxName is version $version
+
+       dict with geom {
+        set points [list [list $startX $startY] \
+                   [list $startX [expr {$startY + $h}]] \
+            [list [expr {$startX + $w}] [expr {$startY + $h}]] \
+            [list [expr {$startX + $w}] $startY] \
+            [list $startX  $startY]]
+    }
+
+
+    Wish $this to animate /boxName/ box $version onto $thing with points $points width 0.001 color $color
+
+sleep 5
+incr version
+Claim $boxName is version $version
+
+set startX [expr {$startX + 0.04}]
+set startY [expr {$startY + 0.04}]
+
+dict with geom {
+        set points [list [list $startX $startY] \
+                   [list $startX [expr {$startY + $h}]] \
+            [list [expr {$startX + $w}] [expr {$startY + $h}]] \
+            [list [expr {$startX + $w}] $startY] \
+            [list $startX  $startY]]
+    }
+
+Wish $this to animate /boxName/ box $version onto $thing with points $points width 0.001 color $color
+
+sleep 5
+Claim $boxName is version 3
+
+
+     }
+
+Wish $this to draw red animated box called redBox which has a width 0.005 and height 0.005 and starts at 0.02 and 0.02 and finishes at 0.015 and 0.015
+
+
+####
+
+
+Wish $this is outlined blue
+
+#######
+
+When /someone/ wishes /thing/ draws a /color/ box with values /x/ and /y/ &\
+     /thing/ has resolved geometry /geom/ {
+    set v 1
+
+    while {$x < 0.015} {
+
+        set l $x
+        set u [expr {$x + $y}]
+        set c $v
+
+        dict with geom {
+                set points [list [list $l $l] \
+                                [list $l $u] \
+                                [list $u $u] \
+                                [list $u $l] \
+                                [list $l $l]]
+        }
+
+        When {$c == $v} {
+        Wish to draw a line onto $thing with \
+                points $points width 0.001 color $color
+
+        Wish $thing is labelled $l
+    }
+
+    sleep 1
+    set x [expr {$x + 0.001}]
+    set v [expr {$v + 1}]
+
+}
+
+    
+
+Wish $thing is outlined red
+
+  
+}
+
+Wish $this draws a yellow box with values 0.005 and 0.1
+
+#####
+
+When /someone/ wishes to draw animated box called /boxName/  &\
+    which has a width /width/ and height /height/ and &\
+    starts at /startX/ and /startY/ and &\
+    finishes at /finishX/ and /finishY/ &\
+     /thing/ has resolved geometry /geom/ {
+
+        Claim animation redBox is frame 1
+
+        dict with geom {
+                set points [list [list $startX $startY] \
+                                [list $startX [expr {$startY + $height}]] \
+                                [list [expr {$startX + $width}] [expr {$startY + $height}]] \
+                                [list [expr {$startX + $width}] $startY] \
+                                [list $startX $startY]]
+        }
+
+        Wish to draw a line onto $thing with \
+                points $points width 0.001 color $color
+
+     }
+
+Wish to draw animated box called redBox  &\
+    which has a length 0.15 and height 0.15 and &\
+    starts at 0.05 and 0.05 and &\
+    finishes at 0.015 and 0.15

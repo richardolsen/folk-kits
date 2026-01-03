@@ -1,3 +1,10 @@
-A kit to generate different types of pdfs to print.
-eg Blank programs, spine labels, cover labels, playing cards, ect...
+Print Types
+
+Standard Print
+
+Title Print
+
+TOC (Table of Contents) Print
+
+Binder Print
 

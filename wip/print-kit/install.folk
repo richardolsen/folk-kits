@@ -4,5 +4,5 @@ Wish $this kit called print is installed with pages {
     {3 "print-title" "print-kit/print-title.folk"}
 }
 
-Wish script "print-kit.js" is copied to "/home/folk/folk-data/kits/print-kit/print-kit.js"
-Wish script "\/home\/folk-data\/kits\/print-kit\/print-kit.js" is served at "\folk-kits\print-kit\print-kit.js" with content type "text\/javascript"
+Wish script "print-kit/js/standard.js" is copied to "/home/folk/folk-data/kits/js/print-kit/print-kit.js"
+Wish script "\/home\/folk-data\/kits\/print-kit\/js\/standard.js" is served at "\folk-kits\print-kit\js\standard.js" with content type "text\/javascript"
