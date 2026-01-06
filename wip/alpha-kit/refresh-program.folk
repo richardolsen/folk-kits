@@ -1,0 +1,31 @@
+# When a program which is out is updated by an external app.
+# for example, php file upload for media cards.
+# Usage eg. curl http://192.168.1.34:4273/refresh-program/14 
+
+
+Wish the web server handles route {/refresh-program/(.*)} with handler {
+    
+    #TODO: Check whether this works or not! 
+
+    When page /id/ is out {
+        set id $1
+        set fullFileName "/home/folk/folk-data/program/$id.folk"
+
+        set fo [open $fullFileName "r"]
+        set data [read $fo]
+        close $fo
+
+        //FIXME: Check if program is out. 
+    
+        Claim $id has program code [read $fo]
+    }
+
+    set data ok
+    set fsize [string bytelength $data]
+
+    dict create statusAndHeaders "HTTP/1.1 200 OK
+    Connection: close
+    Content-Type: text/javascript
+    Content-Length: $fsize\n\n" \
+    body $data
+}

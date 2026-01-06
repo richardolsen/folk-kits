@@ -1,0 +1,21 @@
+# Enable external javascript files to be served by the folk webserver.
+
+Wish the web server handles route {/js/(.*).js} with handler {
+    
+    set fileName $1
+    set ext ".js"
+    set path "/home/folk/folk-data/kits/media-kit/js/"
+    set fullFileName $path$fileName$ext
+    set fo [open $fullFileName "r"]
+    set data [read $fo]
+    close $fo
+
+    set fsize [string bytelength $data]
+
+    dict create statusAndHeaders "HTTP/1.1 200 OK
+    Connection: close
+    Content-Type: text/javascript
+    Content-Length: $fsize\n\n" \
+    body $data
+
+}

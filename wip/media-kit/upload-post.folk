@@ -1,0 +1,13 @@
+# This doesn't work. Need to find out how to upload in folk.
+
+Wish the web server handles route {/post/media/(.*)$} with handler {
+
+    set data "here"
+    set fsize [string bytelength $data]
+
+    dict create statusAndHeaders "HTTP/1.1 200 OK
+    Connection: close
+    Content-Type: text/html
+    Content-Length: $fsize\n\n" \
+    body $data
+}

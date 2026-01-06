@@ -1,0 +1,35 @@
+# This doesn't work - implemented in php for now.
+
+Wish the web server handles route {/media/(.*)$} with handler {
+    set program_id $1
+
+
+    # TODO: validate token to stop people overwriting files 
+
+    html [string map [list program_id $program_id] {
+        <html>
+            <body>
+                <div>
+                    <form action="/post/media/3/1" ENCTYPE="multipart/form-data" method="POST">
+                        <input type="submit" value="Submit">
+                    </form>
+                    <div id="message"></div>
+                    
+                    <span id="status">Status</span>
+                    <pre id="error"></pre>
+                    <pre id="errorCode"></pre>
+                    <span >File Upload:  </span>
+                    <input type="file" id="file-input" name="file-input" />
+        
+                    <button onclick="handleUpload()" value="Upload File">Upload File</button>
+                </div>
+                <div>
+                    <img id="preview-image" src />
+                    <pre id="file-content"></pre>
+                </div>
+                <script src="/lib/folk.js"></script>
+                <script src="/media-kit/js/upload.js"></script>
+            </body>
+        </html>
+    }]
+}
