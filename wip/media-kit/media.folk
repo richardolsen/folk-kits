@@ -1,27 +1,38 @@
 # Placeholder to create a qrcode for file uploads
 # Does not work yet!
 # wish display_qrcode.tcl "Hello, World!" -window . -ppm 4
-#
-# wish $this displays mediaUploadQRcode 
+# 
 
-source "vendor/display_qrcode.tcl"
+When /wisher/ wishes /card/ is a blank media card {
 
-when /someone/ wishes /card/ is a media card {
-    claim $card is a media
-    claim $card media is blank
+    set im "/home/folk/folk-data/kits/store/qrcodes/$card.png"
+    Wish $card displays image $im 
+    
 }
 
-when /media/ is blank & /media/ is a media card {
+When /wisher/ wishes /card/ is a media card with an uploaded image {
+
+    set img "/home/folk/folk-data/kits/store/media/$card.png"
+    Wish $card displays image $img
+    
+}
+
+When /media/ is blank & /media/ is a media card {
     # How do we get the id of the tag?
     # We need it to generate the qrcode and link it to the media
     # Get the QR code from 192.168.1.34/qrcode.php?id=$media 
+
+    # Does the blank qrcode exist? If not, create it
+
+    exec curl -s -o /dev/null -v "http://192.168.1.34/qrcode.php?id=$media"
 
     set im "/home/folk/folk-data/kits/store/qrcodes/$media.png"
     Wish $media displays image $im 
 }
 
-when /media/ is not blank & /media/ is a media card {
+When /media/ is not blank & /media/ is a media card {
     # How do we get the id of the tag?
+    # FIXME: Is not blank a thing???
     # We need it to generate the qrcode and link it to the media
     
     set im "/home/folk/folk-data/kits/store/media/$media.png"
@@ -29,7 +40,7 @@ when /media/ is not blank & /media/ is a media card {
 
 }
 
-when /media/ is a media card with url /mediaUrl/ {
+When /media/ is a media card with url /mediaUrl/ {
 
     Wish $media displays image $mediaUrl 
 }
