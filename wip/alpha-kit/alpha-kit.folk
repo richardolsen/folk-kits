@@ -25,5 +25,5 @@ When /wisher/ wishes program /id/ called /programName/ is page /pageNumber/ of /
 }
 
 Claim $this is the kit called alpha
-# The main alpha kit file is either loader via the april tag or via a separate loader, so don't load it twice!
+# The main alpha kit file is either loaded via the april tag or via a separate loader, so don't load it twice!
 Claim auto loader is disabled for $this
