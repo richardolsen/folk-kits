@@ -39,8 +39,8 @@ try {
     }
 
     // You should also check filesize here. 
-    if ($_FILES['upfile']['size'] > 1000000) {
-        throw new RuntimeException('Exceeded filesize limit.');
+    if ($_FILES['upfile']['size'] > 10000000) {
+        throw new RuntimeException('Exceeded filesize limit. Manual check!');
     }
 
     // DO NOT TRUST $_FILES['upfile']['mime'] VALUE !!
@@ -95,7 +95,9 @@ try {
     // eg. "Wish $this is a media card which displays the image ". $programId .".". $ext;
 
     $programFile = "/home/folk/folk-data/program/". $programId. ".folk";
-    $newCode = "Wish $this is a media card which displays the image ". $programId .".". $ext;
+    $newCode = "Wish \$this is a media card which displays the image ". $programId .".". $ext . "\n";
+    $newCode = $newCode . "Wish \$this stores data ";
+
     fwrite($programFile, $newCode );
     fclose($programFile);
 

@@ -13,10 +13,12 @@ When /wisher/ wishes program /id/ called /programName/ is page /pageNumber/ of /
     # usage: Wish program 4 called "install-kits" is page 2 of alpha kit
 
     # Ensure only a single instance of the program is running.
+    # FIXME: Need to find a better way to do this - eg collected results.
+
     When /nobody/ claims auto loader is disabled for $id {
          set fp [open /home/folk/folk-data/program/$id.folk r]
          set code [read $fp]
-        Claim $id has program code $code
+         Claim $id has program code $code
          close $fp
     }
 
@@ -25,5 +27,6 @@ When /wisher/ wishes program /id/ called /programName/ is page /pageNumber/ of /
 }
 
 Claim $this is the kit called alpha
+
 # The main alpha kit file is either loaded via the april tag or via a separate loader, so don't load it twice!
 Claim auto loader is disabled for $this

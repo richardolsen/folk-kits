@@ -1,0 +1,20 @@
+# Problem - Need to autoload code bundled in other actions 
+# but need to not load code for the initial file.
+# 
+# Solution was to create a nested when to check a condition, 
+# and exclude the program using a specific claim.
+
+# In the specific program use something like this claim
+Claim auto loader is disabled for $this
+
+
+# Use nested whens to exclude 
+When /wisher/ wishes program /id/ called /programName/ is page /pageNumber/ of /kitName/ kit {
+
+    # Do stuff for all programs, including the excludes ones.
+
+    When /nobody/ claims auto loader is disabled for $id {
+        # Do code but exclue some identified through a specific claim.
+
+    }
+}

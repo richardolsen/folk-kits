@@ -1,0 +1,13 @@
+Wish $this kit called media is installed with pages {
+    {1 "media-kit" "/kits/media/media-kit.folk"}
+    {2 "install" "/kits/media/install-kits.folk"}
+    {3 "error-checking" "/kits/media/error-checking.folk"}
+    {4 "data-store" "/kits/media/data-store.folk"}
+}
+
+Wish $this installs apache files {
+    {'index.php', '/var/www/html/media-kit/index.php'},
+    {'upload.php', '/var/www/html/media-kit/upload.php'},
+    {'qrcode.php', '/var/www/html/media-kit/qrcode.php'},
+    {'logo.png', '/var/www/html/media-kit/logo.png'}
+}

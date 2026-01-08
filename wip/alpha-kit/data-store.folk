@@ -1,75 +1,88 @@
-#TODO: Check writing json doesn't kill the system!
 
-when /wisher/ wishes directory /directory/ exists {
+proc kitDataToJson {data} {
 
-    set directories [split $directory "/"]
-    set length [llength $directories]
-    set path "/" 
-    append path [lindex $directories 0]
+    set jPagesOpen ",\"pages\":\{"
+    set jName "\"name\":\"$data(name)\""
+    set jOpen "\{"
 
-    for {set i 1} {$i < $length} {incr i} {
-        if { [file exists $path] == 0} { 
-            file makedir $path
+    set jPages ""
+    set i 0
+
+    foreach {pageNumber programId} $data(pages) {
+
+       if { $i > 0} {
+        set comma ","
+        set jPages $jPages$comma
+       }
+
+       set thisPage "\"$pageNumber\":\"$programId\""
+       set jPages $jPages$thisPage
+       incr i
+    }
+
+    set jPagesClose "\}"
+    set jClose "\}"
+
+    return $jOpen$jName$jPagesOpen$jPages$jPagesClose$jClose;
+}
+
+proc jsonToKitData {jsonData} {
+
+
+    set programData ""
+    set name ""
+    set pages [dict create ]
+
+    set removeBoundingBrackets [string range $jsonData 1 end-2]
+    set comma_location [string first "," $removeBoundingBrackets]
+
+    if {$comma_location > -1} {
+        set nameStr [string range $removeBoundingBrackets 0 [expr {$comma_location -1}]]
+        set pagesStr [string range $removeBoundingBrackets [expr {$comma_location +1}] end]
+
+        set colonLocation [string first ":" $nameStr]
+
+        if {$colonLocation > -1} {
+            set name [string range $nameStr [expr {$colonLocation +2}] end-1]
         }
-
-        append path [lindex $directories $i]
     }
-}
 
-when /wisher/ wishes /kitName/ kit has a data store {
-    # creates and maintains the folk-kit directory under folk-data
-    # usage:  Wish alpha kit has a data store
 
-    Wish directory "/home/folk/folk-data/folk-kits/$kitName" exists 
-
-    set fileName "/home/folk/folk-data/folk-kits/$kitName/store.json"
-    if { [file exists $fileName] == 0} { 
-        set fp [open /home/folk/folk-data/folk-kits/$kitName/store.json w]
-
-        set userData [dict create id $id]
-        set jsonData [json::dict2json $userData]
-        puts $fp $jsonData
-        close $fp
-    }
-}
-
-when /wisher/ wishes program /id/ has a data store {
-    # creates and maintains the folk-kit directory under folk-data
-    # usage:  Wish program $id has a data store
-
-    # Check if the base folk-kits directory exists, and if not make it.
-
-    Wish directory "/home/folk/folk-data/folk-kits/store" exists 
-
-    # Check if the base store directory exists, and if not make it.
-    set fileName "/home/folk/folk-data/folk-kits/store/$id.json"
-    if { [file exists $fileName] == 0} { 
-        set fp [open /home/folk/folk-data/folk-kits/store/$id.json w]
-
-        set userData [dict create id $id]
-        set jsonData [json::dict2json $userData]
-        puts $fp $jsonData
-        close $fp
-    }
-}
-
-when /wisher/ wishes program /id/ stores /key/ /val/ {
-    # usage: Wish program 3 stores name "Alpha Kit"
     
-    Wish program $id has a data store
-
-    set fp [open /home/folk/folk-data/folk-kits/store/$id.json r]
-    set jsonString [read $fp]
-    close $fp
-
-    set jsonData [json::json2dict $jsonString]
-    dict update jsonData $key $val {
-    if {![info exists $key]} {
-       set $key $val
-    }
-  }
-
-  set fp [open /home/folk/folk-data/folk-kits/store/$id.json w]
-  puts $fp $jsonData
-  close $fp
+    return $name
 }
+
+When /wisher/ claims /kitName/ kit stores program /programId/ as page /pageNumber/ {
+
+    set path /home/folk/folk-data/kits/store/json/$kitName-kit.json
+
+    if { [file exists $path]} { 
+        set fp [open $path r]
+        set jsonString [read $fp]
+        close $fp
+
+       set content [jsonToKitData $jsonString]
+      #  set pages $content(pages)
+
+      set test $content
+        
+    } else {
+        set content [dict create]
+        set pages [dict create]
+    }
+
+   # set content(name) $kitName
+   # set pages($pageNumber) $programId
+   # set content(pages) $pages
+
+   # set jString [kitDataToJson $content]
+    set jString  $test
+
+    set fp [open $path w]
+    puts $fp $jString
+    close $fp
+}
+
+Claim alpha kit stores program 3 as page 1
+# Claim alpha kit stores program 4 as page 2
+# Wish alpha kit stores program 5 as page 3
